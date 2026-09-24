@@ -17,9 +17,17 @@ async function main() {
   const route = guildId
     ? Routes.applicationGuildCommands(clientId, guildId)
     : Routes.applicationCommands(clientId);
+  const body = say.data.toJSON();
+  const commands = await rest.get(route);
+  const existing = commands.find((command) => command.name === body.name && command.type === body.type);
 
-  await rest.put(route, { body: [say.data.toJSON()] });
-  console.log(guildId ? "Registered /say in server " + guildId : "Registered /say globally");
+  if (existing) {
+    await rest.patch(Routes.applicationCommand(clientId, existing.id), { body });
+  } else {
+    await rest.post(route, { body });
+  }
+
+  console.log((existing ? "Updated" : "Registered") + " /say; existing commands were preserved.");
 }
 
 main().catch((error) => {

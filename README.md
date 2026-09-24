@@ -17,7 +17,7 @@ DISCORD_GUILD_ID is optional. Set it to register /say to one server for immediat
 
 1. Run npm install.
 2. Set DISCORD_BOT_TOKEN and, optionally, DISCORD_GUILD_ID.
-3. Run npm run register to register /say.
+3. Run npm run register to create or update only /say; other registered commands are preserved.
 4. Run npm start to start the bot.
 
 The command accepts a required message option up to 2,000 characters, replies in the channel, and does not trigger user or role mentions from the supplied text.
